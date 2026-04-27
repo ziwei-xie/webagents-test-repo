@@ -1,0 +1,12 @@
+[
+  {
+    "question": "What changes would you like me to make to the README.md? Currently it only contains the heading `# webagents-test-repo`. Here are some options, or feel free to describe your own:",
+    "answer": "Generate a comprehensive README based on the solution (description, architecture, setup instructions, etc.)",
+    "options": [
+      "Generate a comprehensive README based on the solution (description, architecture, setup instructions, etc.)",
+      "Add specific sections — tell me which ones (e.g., prerequisites, usage, deployment)",
+      "Replace with custom content — I'll provide the text"
+    ],
+    "timestamp": "2026-04-27T12:05:45.142Z"
+  }
+]
