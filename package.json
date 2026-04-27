@@ -1,0 +1,8 @@
+{
+  "name": "hello-world-solution",
+  "version": "1.0.0",
+  "private": true,
+  "appFoundationDeployer": {
+    "destination": "https://deployer-api.c7fbaa2.stage.kyma.ondemand.com/v1"
+  }
+}

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hello World App</title>
+  <script src="https://unpkg.com/@ui5/webcomponents@2/dist/bundle.esm.js" type="module"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: '72', Arial, sans-serif; background: #f5f6f7; color: #32363a; }
+    .container { max-width: 700px; margin: 0 auto; padding: 2rem; }
+    h1 { text-align: center; margin-bottom: 0.5rem; color: #0a6ed1; }
+    .subtitle { text-align: center; margin-bottom: 2rem; color: #6a6d70; }
+    .card { background: #fff; border-radius: 12px; box-shadow: 0 1px 4px rgba(0,0,0,0.08); padding: 1.5rem; margin-bottom: 1.5rem; }
+    .card h2 { font-size: 1.1rem; margin-bottom: 1rem; color: #32363a; }
+    .row { display: flex; gap: 0.5rem; align-items: center; }
+    input { flex: 1; padding: 0.6rem 0.8rem; border: 1px solid #d1d1d1; border-radius: 8px; font-size: 1rem; }
+    input:focus { outline: none; border-color: #0a6ed1; }
+    button { padding: 0.6rem 1.2rem; border: none; border-radius: 8px; font-size: 1rem; cursor: pointer; font-weight: 600; }
+    .btn-primary { background: #0a6ed1; color: #fff; }
+    .btn-primary:hover { background: #0854a0; }
+    .btn-success { background: #2b7d2b; color: #fff; }
+    .btn-success:hover { background: #1e6b1e; }
+    .btn-danger { background: #bb0000; color: #fff; font-size: 0.85rem; padding: 0.4rem 0.8rem; }
+    .result { text-align: center; padding: 1rem; font-size: 1.5rem; color: #0a6ed1; font-weight: bold; }
+    .error { background: #fff3f3; color: #bb0000; padding: 0.8rem; border-radius: 8px; margin-bottom: 1rem; }
+    .list-item { display: flex; justify-content: space-between; align-items: center; padding: 0.8rem; border-bottom: 1px solid #f0f0f0; }
+    .list-item:last-child { border-bottom: none; }
+    .list-item .name { font-weight: 600; }
+    .list-item .msg { color: #6a6d70; font-size: 0.9rem; }
+    .empty { text-align: center; color: #999; padding: 1rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Hello World App</h1>
+    <p class="subtitle">A simple CAP + UI5 Web Components application</p>
+
+    <div id="error" class="error" style="display:none"></div>
+
+    <!-- Greet Card -->
+    <div class="card">
+      <h2>Get a Greeting</h2>
+      <div class="row">
+        <input id="greetName" placeholder="Enter a name (default: World)" />
+        <button class="btn-primary" onclick="handleGreet()">Greet</button>
+      </div>
+      <div id="greetResult" class="result" style="display:none"></div>
+    </div>
+
+    <!-- Create Card -->
+    <div class="card">
+      <h2>Create a New Greeting</h2>
+      <div class="row">
+        <input id="newName" placeholder="Enter a name" />
+        <button class="btn-success" onclick="handleCreate()">Create</button>
+      </div>
+    </div>
+
+    <!-- Greetings List -->
+    <div class="card">
+      <h2>Saved Greetings <span id="count" style="color:#6a6d70;font-weight:normal"></span></h2>
+      <div id="greetingsList"></div>
+    </div>
+  </div>
+
+  <script>
+    const API = '/api/hello';
+
+    function showError(msg) {
+      const el = document.getElementById('error');
+      el.textContent = msg;
+      el.style.display = 'block';
+      setTimeout(() => el.style.display = 'none', 5000);
+    }
+
+    async function loadGreetings() {
+      try {
+        const res = await fetch(`${API}/Greetings`);
+        const data = await res.json();
+        const items = data.value || [];
+        document.getElementById('count').textContent = `(${items.length} entries)`;
+        const list = document.getElementById('greetingsList');
+        if (items.length === 0) {
+          list.innerHTML = '<div class="empty">No greetings yet.</div>';
+          return;
+        }
+        list.innerHTML = items.map(g => `
+          <div class="list-item">
+            <div>
+              <div class="name">${g.name}</div>
+              <div class="msg">${g.message}</div>
+            </div>
+            <button class="btn-danger" onclick="handleDelete('${g.ID}')">Delete</button>
+          </div>
+        `).join('');
+      } catch (e) {
+        showError('Failed to load greetings.');
+      }
+    }
+
+    async function handleGreet() {
+      const name = document.getElementById('greetName').value || 'World';
+      try {
+        const res = await fetch(`${API}/greet(name='${encodeURIComponent(name)}')`);
+        const data = await res.json();
+        const el = document.getElementById('greetResult');
+        el.textContent = data.value;
+        el.style.display = 'block';
+      } catch (e) {
+        showError('Failed to get greeting.');
+      }
+    }
+
+    async function handleCreate() {
+      const name = document.getElementById('newName').value.trim();
+      if (!name) return;
+      try {
+        const res = await fetch(`${API}/Greetings`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name })
+        });
+        if (res.ok) {
+          document.getElementById('newName').value = '';
+          loadGreetings();
+        } else {
+          showError('Failed to create greeting.');
+        }
+      } catch (e) {
+        showError('Failed to create greeting.');
+      }
+    }
+
+    async function handleDelete(id) {
+      try {
+        const res = await fetch(`${API}/Greetings(${id})`, { method: 'DELETE' });
+        if (res.ok) loadGreetings();
+      } catch (e) {
+        showError('Failed to delete greeting.');
+      }
+    }
+
+    // Load greetings on page load
+    loadGreetings();
+  </script>
+</body>
+</html>

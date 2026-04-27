@@ -1,0 +1,18 @@
+apiVersion: asset.sap/v1
+kind: Asset
+
+metadata:
+  name: hello-world
+  version: "1.0.0"
+
+type: cap-app
+
+provides:
+  framework: cap
+
+components:
+  - name: server
+    buildPath: .
+    port: 4004
+    env:
+      PORT: "4004"

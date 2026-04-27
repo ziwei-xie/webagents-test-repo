@@ -1,0 +1,61 @@
+[
+  {
+    "question": "What kind of design improvements are you looking for? Here are some options:",
+    "answer": "Please decide on your own and proceed.",
+    "options": [
+      "Better styling and visual theme (colors, layout, spacing)",
+      "Add SAP Fiori-style design patterns (cards, headers, footers)",
+      "Responsive/mobile-friendly layout",
+      "Dark mode support",
+      "Dashboard-style layout with charts/widgets",
+      "I'll describe what I want"
+    ],
+    "timestamp": "2026-04-24T14:22:11.842Z"
+  },
+  {
+    "question": "What type of skill file would you like me to generate?",
+    "answer": "An agent extension — to add capabilities (tools/instructions) to an existing agent",
+    "options": [
+      "A Joule skill file — to register this app's capabilities with SAP Joule",
+      "An agent extension — to add capabilities (tools/instructions) to an existing agent",
+      "Something else — please describe what you need"
+    ],
+    "timestamp": "2026-04-25T13:18:22.601Z"
+  },
+  {
+    "question": "Which agent would you like to extend? Please provide one of the following:\n- The **ordId** of the agent (e.g., `sap.joule:agent:employee-onboarding:v1`)\n- The **name or description** of the agent you want to extend\n- Or say **\"list available\"** if you'd like me to query for all extendable agents",
+    "answer": "list available",
+    "timestamp": "2026-04-25T13:18:53.837Z"
+  },
+  {
+    "question": "I'm unable to query UMS directly in this environment to list available agents. Could you provide the following details about the agent you'd like to extend?\n\n1. **ordId** — e.g., `sap.joule:agent:employee-onboarding:v1`\n2. **Title** — e.g., \"Employee Onboarding Agent\"\n3. **Description** — brief description of the agent\n4. **Version** — e.g., \"1.0.0\"\n5. **A2A Agent Card URL** (if available) — or the agent's extension capabilities (capabilityId, supported hooks, whether tool additions are enabled, etc.)\n\nAlternatively, if you have the agent card JSON, you can paste the key details here.",
+    "answer": "a new agent skill md file",
+    "timestamp": "2026-04-25T13:23:44.562Z"
+  },
+  {
+    "question": "It sounds like you want to create a skill markdown (.md) file rather than an agent extension. Could you clarify what this skill file should do?",
+    "answer": "A skill.md that defines instructions/behavior for an AI agent (like a system prompt)",
+    "options": [
+      "A skill.md that defines instructions/behavior for an AI agent (like a system prompt)",
+      "A Joule skill definition file for SAP Joule",
+      "A documentation/README file describing the agent's skills and capabilities",
+      "Something else — let me describe it"
+    ],
+    "timestamp": "2026-04-25T13:24:10.597Z"
+  },
+  {
+    "question": "What should this agent skill be about? For example:\n\n- Should it relate to your existing **Hello World CAP app** (e.g., an agent that helps manage greetings, answers questions about the app)?\n- Or is it for a completely **different domain/purpose**?\n\nPlease describe the agent's role, what it should be able to do, and any tools or APIs it should interact with.",
+    "answer": "a helpful skill",
+    "timestamp": "2026-04-25T13:24:49.923Z"
+  },
+  {
+    "question": "Where would you like the skill.md file to be created?",
+    "answer": "assets/hello-world/skill.md — inside the existing Hello World app",
+    "options": [
+      "assets/hello-world/skill.md — inside the existing Hello World app",
+      "A new agent asset folder (e.g., assets/hello-agent/skill.md)",
+      "In the solution root (./skill.md)"
+    ],
+    "timestamp": "2026-04-25T13:26:05.780Z"
+  }
+]

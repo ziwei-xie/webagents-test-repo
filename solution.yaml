@@ -1,0 +1,10 @@
+apiVersion: solution.sap/v1
+kind: Solution
+
+metadata:
+  name: hello-world
+  version: "1.0.0"
+  description: "Simple Hello World CAP app with React frontend using SAP UI5 Web Components"
+
+assets:
+  - ref: ./assets/hello-world/asset.yaml
